@@ -25,12 +25,13 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-
-      - name: Build APK
+      - name: Find Gradle wrapper
         run: |
-          chmod +x $(find source -name gradlew -type f | head -1)
-          cd "$(dirname "$(find "$GITHUB_WORKSPACE/source" -name gradlew -type f | head -1)")"
-          ./gradlew assembleDebug
+          echo "Checking extracted files..."
+          find . -type f -name gradlew
+          echo "Checking ZIP files..."
+          find . -maxdepth 3 -type f -iname '*.zip'
+      
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
